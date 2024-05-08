@@ -1,6 +1,11 @@
 {
 	"files.associations": {
 		"memory": "c",
-		"utility": "c"
+		"utility": "c",
+		"iterator": "c",
+		"stdio.h": "c",
+		"__node_handle": "c",
+		"push_swap.h": "c",
+		"chrono": "c"
 	}
 }
