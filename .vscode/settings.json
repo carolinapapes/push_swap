@@ -6,6 +6,9 @@
 		"stdio.h": "c",
 		"__node_handle": "c",
 		"push_swap.h": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"libft.h": "c",
+		"__functional_03": "c",
+		"functional": "c"
 	}
 }

@@ -6,14 +6,14 @@
 #    By: capapes <capapes@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 14:40:46 by capapes           #+#    #+#              #
-#    Updated: 2024/05/08 17:58:49 by capapes          ###   ########.fr        #
+#    Updated: 2024/05/09 15:07:45 by capapes          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and compiler flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = push_swap.c ft_parser.c ft_isint.c ft_idx.c
+SRC = push_swap.c ft_parser.c ft_isint.c ft_idx.c ft_moves.c
 OBJ = $(SRC:.c=.o)
 LIBFT_PATH	=	./libft
 PREQ = printf.h Makefile $(LIBFT_PATH)/libft.a

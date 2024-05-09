@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:04 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/08 19:53:39 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:42:30 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_createnode(int value, int index, t_list **node)
 	content[0] = value;
 	content[1] = index;
 	newnode->content = (void *)content;
+	newnode->next = NULL;
 	*node = newnode;
 	return (1);
 }
@@ -49,7 +50,6 @@ int	ft_createstack(int *arr, int *idx, int n, t_list **stack_a)
 	t_list	*node;
 
 	i = n;
-	node = NULL;
 	while (--i > -1)
 	{
 		if (!ft_createnode(arr[i], idx[i], &node))
