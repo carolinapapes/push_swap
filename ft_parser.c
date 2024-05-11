@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:04 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/09 15:42:30 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/11 19:49:01 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,20 @@ int	ft_puterror(void)
 
 int	ft_createnode(int value, int index, t_list **node)
 {
-	t_list	*newnode;
 	int		*content;
 
-	newnode = malloc(sizeof(t_list));
-	if (!newnode)
-		return (0);
 	content = malloc(sizeof(int) * 2);
 	if (!content)
 		return (0);
 	content[0] = value;
 	content[1] = index;
-	newnode->content = (void *)content;
-	newnode->next = NULL;
-	*node = newnode;
+	*node = ft_lstnew((void *)content);
+	if (!(*node))
+		return (0);
 	return (1);
 }
 
-void	ft_stackadd_front(t_list **lst, t_list *new)
-{
-	new->next = *lst;
-	*lst = new;
-	return ;
-}
+
 
 int	ft_createstack(int *arr, int *idx, int n, t_list **stack_a)
 {
@@ -54,7 +45,7 @@ int	ft_createstack(int *arr, int *idx, int n, t_list **stack_a)
 	{
 		if (!ft_createnode(arr[i], idx[i], &node))
 			return (0); // clean all other nodes here
-		ft_stackadd_front(stack_a, node);
+		ft_lstadd_front(stack_a, node);
 	}
 	return (1);
 }
@@ -74,7 +65,6 @@ int	ft_parser(int argc, char *argv[], t_list **stack_a)
 		return (free (arr), ft_puterror());
 	if (!ft_find_index(arr, &idx, argc))
 		return (free(arr), 1);
-	ft_putstr_fd("no errors\n", 1);
 	if (!ft_createstack(arr, idx, argc, stack_a))
 		return (free(arr), free(idx), 1);
 	return (0);

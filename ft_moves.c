@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:05:46 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/09 15:46:11 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/11 19:36:03 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ void	ft_p(t_list **to, t_list **from)
 {
 	t_list	*aux;
 
+	if (!*to)
+	{
+		*to = *from;
+		*from = (*from)->next;
+		(*to)->next = NULL;
+		return ;
+	}
 	aux = *from;
 	*from = (*from)->next;
 	aux->next = *to;
@@ -37,19 +44,17 @@ void	ft_pb(t_list **from, t_list **to)
 void	ft_r(t_list **target)
 {
 	t_list	*aux;
-	t_list	*aux2;
 
-	if (*target == NULL)
+	if (*target == NULL || (*target)->next == NULL)
 		return ;
 	aux = *target;
 	while (aux->next != NULL)
 		aux = aux->next;
-	aux2 = *target;
-	while (aux2->next != NULL && aux2->next->next != NULL)
-		aux2 = aux2->next;
-	aux->next = (*target)->next;
-	aux2->next = (*target);
-	aux2->next->next = NULL;
-	*target = aux;
+	aux->next = (*target);
+	*target = (*target)->next;
+	aux->next->next = NULL;
+	ft_putstr_fd("ra\n", 1);
 	return ;
 }
+
+
