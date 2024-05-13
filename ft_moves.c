@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:05:46 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/13 15:27:08 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/13 18:31:56 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_p(t_list **to, t_list **from)
 
 void	ft_px(t_list **to, t_list **from, char x)
 {
-	if (x == 'a')
+	if (x == 'a' || x == 'l')
 		ft_putstr_fd("pb\n", 1);
 	if (x == 'b')
 		ft_putstr_fd("pa\n", 1);
@@ -65,7 +65,7 @@ void	ft_rx(t_list **target, char x)
 	aux->next = (*target);
 	*target = (*target)->next;
 	aux->next->next = NULL;
-	if (x == 'a')
+	if (x == 'a' || x == 'l')
 		ft_putstr_fd("ra\n", 1);
 	if (x == 'b')
 		ft_putstr_fd("rb\n", 1);
