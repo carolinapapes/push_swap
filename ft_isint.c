@@ -6,20 +6,31 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:35:14 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/08 17:55:58 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/12 16:43:21 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// int	ft_isnbr(char *s)
+// {
+// 	if (ft_isempty(s))
+// 		return (0);
+// 	if (ft_issign(*s))
+// 		++s;
+// 	if (ft_isempty(s)) // add chack if digit
+// 		return (0);
+// 	while (ft_isdigit(*s))
+// 		++s;
+// 	if (!ft_isempty(s))
+// 		return (0);
+// 	return (1);
+// }
+
 int	ft_isnbr(char *s)
 {
-	if (ft_isempty(s))
-		return (0);
-	if (ft_issign(*s))
+	if (ft_issign(*s) && ft_isdigit(*(s + 1)))
 		++s;
-	if (ft_isempty(s))
-		return (0);
 	while (ft_isdigit(*s))
 		++s;
 	if (!ft_isempty(s))
@@ -45,8 +56,6 @@ int	ft_isint(char *s)
 		return (0);
 	sign = *s;
 	s = ft_getnonzero(s);
-	if (ft_isempty(s))
-		return (1);
 	len = ft_strlen(s);
 	if (len != 10)
 		return (len < 10);
@@ -55,7 +64,7 @@ int	ft_isint(char *s)
 	return (ft_strncmp(STR_MAX_INT, s, len) >= 0);
 }
 
-int ft_isarrint(int argc, char *argv[])
+int	ft_isarrint(int argc, char *argv[])
 {
 	int	i;
 	int	isvalid;

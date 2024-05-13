@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:05:46 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/11 19:36:03 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/13 15:27:08 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,47 @@ void	ft_p(t_list **to, t_list **from)
 	*to = aux;
 }
 
-void	ft_pa(t_list **to, t_list **from)
+void	ft_px(t_list **to, t_list **from, char x)
 {
-	ft_putstr_fd("pa\n", 1);
-	ft_p(to, from);
+	if (x == 'a')
+		ft_putstr_fd("pb\n", 1);
+	if (x == 'b')
+		ft_putstr_fd("pa\n", 1);
+	ft_p(from, to);
 }
 
 void	ft_pb(t_list **from, t_list **to)
 {
 	ft_putstr_fd("pb\n", 1);
 	ft_p(to, from);
+}
+
+
+void	ft_pa(t_list **to, t_list **from)
+{
+	ft_putstr_fd("pa\n", 1);
+	ft_p(to, from);
+}
+
+
+
+void	ft_rx(t_list **target, char x)
+{
+	t_list	*aux;
+
+	if (*target == NULL || (*target)->next == NULL)
+		return ;
+	aux = *target;
+	while (aux->next != NULL)
+		aux = aux->next;
+	aux->next = (*target);
+	*target = (*target)->next;
+	aux->next->next = NULL;
+	if (x == 'a')
+		ft_putstr_fd("ra\n", 1);
+	if (x == 'b')
+		ft_putstr_fd("rb\n", 1);
+	return ;
 }
 
 void	ft_r(t_list **target)
