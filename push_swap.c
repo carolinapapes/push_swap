@@ -6,11 +6,10 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:43:17 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/13 18:51:02 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:16:50 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "push_swap.h"
 
 void	ft_printlist(void *content)
@@ -19,149 +18,72 @@ void	ft_printlist(void *content)
 	ft_putstr_fd("\n", 1);
 }
 
-int	ft_getbitslen(int nbr)
+void	ft_sort3(t_list **a)
 {
-	int	digits;
+	int	first;
+	int	second;
+	int	third;
 
-	digits = 0;
-	while (nbr)
+	while (!ft_issorted(*a, 4))
 	{
-		nbr = nbr >> 1;
-		digits++;
+		first = ((int *)((*a)->content))[1];
+		second = ((int *)((*a)->next->content))[1];
+		third = ((int *)((*a)->next->next->content))[1];
+		if ((first < second && first < third)
+			|| (first < second && first > third))
+			ft_rrx(a, 'a');
+		if (first > second && first < third)
+			ft_sx(a, 'a');
+		if (first > second && first > third)
+			ft_rx(a, 'a');
 	}
-	return (digits);
+	return ;
 }
 
-void	ft_emptyb(t_list **stack_a, t_list **stack_b)
+void	ft_push_first(t_list **a, t_list **b, int len)
 {
-	while (*stack_b)
-		ft_pa(stack_a, stack_b);
-}
+	int	last;
+	int	first;
 
-void	ft_mapa(t_list **stack_a, t_list **stack_b, int len, int i)
-{
-	len++;
-	while (--len)
+	while (len > 3)
 	{
-		if (!(((int *)(*stack_a)->content)[1] >> i & 1))
-			ft_pb(stack_a, stack_b);
-		else
-			ft_r(stack_a);
-	}
-}
-
-void	ft_sortidx(t_list **stack_a, t_list **stack_b, int len)
-{
-	int	i;
-	int	digits;
-
-	if (!len)
-		return ;
-	i = -1;
-	digits = ft_getbitslen(len - 1);
-	while (++i < digits)
-	{
-		ft_mapa(stack_a, stack_b, len, i);
-		ft_emptyb(stack_a, stack_b);
-	}
-}
-
-int	ft_issorted(t_list *i, int len)
-{
-	t_list	*j;
-	int		k;
-
-	k = -1;
-	while (i != NULL && ++k < len)
-	{
-		j = i -> next;
-		while (j != NULL)
+		first = ((int *)((*a)->content))[1];
+		last = ((int *)((ft_lstlast(*a))->content))[1];
+		if (first == 0 || first == 1)
 		{
-			if (((int *)(i->content))[1] > (((int *)(j->content))[1]))
-				return (0);
-			j = j -> next;
+			ft_px(b, a, 'a');
+			len--;
 		}
-		i = i -> next;
+		if (last == 0 || last == 1)
+		{
+			ft_rrx(a, 'a');
+			ft_px(b, a, 'a');
+			len--;
+		}
+		if (len > 3)
+			ft_rx(a, 'a');
 	}
-	return (1);
 }
 
-int	ft_mapa_modify(t_list **from, t_list **to, int len, int i, char stack)
+void	ft_sort5(t_list **a, t_list **b, int len)
 {
-	int	newlen;
-	int	content;
+	int	first;
+	int	b_node;
 
-	newlen = 0;
-	len++;
-	while (--len)
+	ft_push_first(a, b, len);
+	ft_sort3(a);
+	ft_px(a, b, 'b');
+	b_node = ((int *)((*b)->content))[1];
+	first = ((int *)((*a)->content))[1];
+	if (b_node < first)
+		ft_px(a, b, 'b');
+	else
 	{
-		content = ((int *)(*from)->content)[1];
-		if ((stack == 'a' && !(content >> i & 1))
-			|| (stack == 'b' && (content >> i & 1)))
-		{
-			newlen++;
-			ft_px(from, to, stack);
-		}
-		else if ((stack == 'l' && !(content >> i & 1)))
-		{
-			newlen++;
-			if (ft_issorted(*from, len))
-				break ;
-			ft_px(from, to, stack);
-		}
-		else
-			ft_rx(from, stack);
+		ft_px(a, b, 'b');
+		ft_sx(a, 'a');
 	}
-	return (newlen);
+	return ;
 }
-
-void	ft_sortidx_modify(t_list **stack_a, t_list **stack_b, int len)
-{
-	int	i;
-	int	digits;
-	int	b_len;
-	int	a_len;
-	int	moves;
-
-	if (!len)
-		return ;
-	i = -1;
-	digits = ft_getbitslen(len - 1);
-	b_len = 0;
-	a_len = len;
-	while (++i < digits)
-	{
-		if (i == digits - 1)
-			moves = ft_mapa_modify(stack_a, stack_b, a_len, i, 'l');
-		else
-			moves = ft_mapa_modify(stack_a, stack_b, a_len, i, 'a');
-		b_len += moves;
-		a_len -= moves;
-		if ((i + 1) < digits)
-		{
-			moves = ft_mapa_modify(stack_b, stack_a, b_len, i + 1, 'b');
-			b_len -= moves;
-			a_len += moves;
-		}
-	}
-	ft_emptyb(stack_a, stack_b);
-}
-
-
-		// if (i == digits - 1)
-		// 	moves = ft_mapa_modify(stack_a, stack_b, a_len, i, 'l');
-		// else
-
-		// ft_putstr_fd("\n### stack_a len:\n", 1);
-		// ft_putnbr_fd(a_len, 1);
-		// ft_putstr_fd("\n### stack_b len:\n", 1);
-		// ft_putnbr_fd(b_len, 1);
-		// ft_putstr_fd("\nstack a:\n", 1);
-		// ft_lstiter(*stack_a, ft_printlist);
-		// ft_putstr_fd("stack b:\n", 1);
-		// ft_lstiter(*stack_b, ft_printlist);
-
-
 
 int	main(int argc, char *argv[])
 {
@@ -172,7 +94,19 @@ int	main(int argc, char *argv[])
 	stack_b = NULL;
 	if (ft_parser(argc - 1, argv + 1, &stack_a))
 		return (1);
-	ft_sortidx_modify(&stack_a, &stack_b, argc - 1);
+	if (ft_issorted(stack_a, argc -1))
+	{
+		ft_lstclear(&stack_a, ft_freecontent);
+		ft_lstclear(&stack_b, ft_freecontent);
+		return (0);
+	}
+	if (argc == 4)
+		ft_sort3(&stack_a);
+	if (argc == 6)
+		ft_sort5(&stack_a, &stack_b, argc - 1);
+	else
+		ft_sortidx(&stack_a, &stack_b, argc - 1);
+	ft_lstclear(&stack_a, ft_freecontent);
+	ft_lstclear(&stack_b, ft_freecontent);
 	return (0);
 }
-

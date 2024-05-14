@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 20:05:46 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/13 18:31:56 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/14 19:18:45 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,61 +31,35 @@ void	ft_p(t_list **to, t_list **from)
 
 void	ft_px(t_list **to, t_list **from, char x)
 {
-	if (x == 'a' || x == 'l')
+	if (x == 'a')
 		ft_putstr_fd("pb\n", 1);
 	if (x == 'b')
 		ft_putstr_fd("pa\n", 1);
-	ft_p(from, to);
-}
-
-void	ft_pb(t_list **from, t_list **to)
-{
-	ft_putstr_fd("pb\n", 1);
 	ft_p(to, from);
 }
 
-
-void	ft_pa(t_list **to, t_list **from)
+void	ft_emptyb(t_list **stack_a, t_list **stack_b)
 {
-	ft_putstr_fd("pa\n", 1);
-	ft_p(to, from);
+	while (*stack_b)
+		ft_px(stack_a, stack_b, 'b');
 }
 
-
-
-void	ft_rx(t_list **target, char x)
+void	ft_s(t_list **target)
 {
 	t_list	*aux;
 
-	if (*target == NULL || (*target)->next == NULL)
-		return ;
-	aux = *target;
-	while (aux->next != NULL)
-		aux = aux->next;
-	aux->next = (*target);
-	*target = (*target)->next;
-	aux->next->next = NULL;
-	if (x == 'a' || x == 'l')
-		ft_putstr_fd("ra\n", 1);
+	aux = (*target)->next;
+	(*target)->next = aux->next;
+	aux->next = *target;
+	*target = aux;
+	return ;
+}
+
+void	ft_sx(t_list **target, char x)
+{
+	if (x == 'a')
+		ft_putstr_fd("sa\n", 1);
 	if (x == 'b')
-		ft_putstr_fd("rb\n", 1);
-	return ;
+		ft_putstr_fd("sb\n", 1);
+	ft_s(target);
 }
-
-void	ft_r(t_list **target)
-{
-	t_list	*aux;
-
-	if (*target == NULL || (*target)->next == NULL)
-		return ;
-	aux = *target;
-	while (aux->next != NULL)
-		aux = aux->next;
-	aux->next = (*target);
-	*target = (*target)->next;
-	aux->next->next = NULL;
-	ft_putstr_fd("ra\n", 1);
-	return ;
-}
-
-

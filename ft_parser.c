@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:04 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/11 19:49:01 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/14 10:48:25 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ int	ft_createnode(int value, int index, t_list **node)
 	content[1] = index;
 	*node = ft_lstnew((void *)content);
 	if (!(*node))
+	{
+		free(content);
 		return (0);
+	}
 	return (1);
 }
 
-
+void	ft_freecontent(void *content)
+{
+	free(content);
+}
 
 int	ft_createstack(int *arr, int *idx, int n, t_list **stack_a)
 {
@@ -44,7 +50,11 @@ int	ft_createstack(int *arr, int *idx, int n, t_list **stack_a)
 	while (--i > -1)
 	{
 		if (!ft_createnode(arr[i], idx[i], &node))
-			return (0); // clean all other nodes here
+		{
+			ft_lstclear(stack_a, ft_freecontent);
+			free(stack_a);
+			return (0);
+		}
 		ft_lstadd_front(stack_a, node);
 	}
 	return (1);
@@ -67,5 +77,7 @@ int	ft_parser(int argc, char *argv[], t_list **stack_a)
 		return (free(arr), 1);
 	if (!ft_createstack(arr, idx, argc, stack_a))
 		return (free(arr), free(idx), 1);
+	free(arr);
+	free(idx);
 	return (0);
 }
