@@ -6,13 +6,30 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:57:38 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/14 19:16:19 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/15 15:15:49 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_createarray(int **arr, int n, char *argv[])
+int	ft_are_repeated(int *arr, int n)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < n)
+	{
+		j = i;
+		while (++j < n && arr[j] != arr[i])
+			;
+		if (j != n)
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_new_array(int **arr, int n, char *argv[])
 {
 	int	i;
 
@@ -25,7 +42,7 @@ int	ft_createarray(int **arr, int n, char *argv[])
 	return (1);
 }
 
-int	ft_index(int *arr, int n, int nbr)
+int	ft_get_index(int *arr, int n, int nbr)
 {
 	int	i;
 	int	res;
@@ -38,7 +55,7 @@ int	ft_index(int *arr, int n, int nbr)
 	return (res);
 }
 
-int	ft_find_index(int *arr, int **idx, int n)
+int	ft_add_indexes(int *arr, int **idx, int n)
 {
 	int	i;
 
@@ -47,6 +64,6 @@ int	ft_find_index(int *arr, int **idx, int n)
 		return (0);
 	i = -1;
 	while (++i < n)
-		(*idx)[i] = ft_index(arr, n, arr[i]);
+		(*idx)[i] = ft_get_index(arr, n, arr[i]);
 	return (1);
 }
