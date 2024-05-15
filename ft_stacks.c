@@ -6,7 +6,7 @@
 /*   By: capapes <capapes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:31:12 by capapes           #+#    #+#             */
-/*   Updated: 2024/05/15 15:33:40 by capapes          ###   ########.fr       */
+/*   Updated: 2024/05/15 15:53:10 by capapes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,3 @@ int	ft_new_stack(int *arr, int *idx, int n, t_list **stack_a)
 	}
 	return (1);
 }
-
