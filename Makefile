@@ -6,7 +6,7 @@
 #    By: capapes <capapes@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 14:40:46 by capapes           #+#    #+#              #
-#    Updated: 2024/05/16 12:46:32 by capapes          ###   ########.fr        #
+#    Updated: 2024/05/16 13:04:33 by capapes          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(NAME): ${OBJ}
 	@$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_PATH) -lft
 	@echo "$(GREEN)📚completed		push_swap.c$(DEF_COLOR)"
 
-$(BUILD_DIR)/%.o: %.c ${DPS} | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 	@echo "$(GRAY)⏳compiling		$<$(DEF_COLOR)"
 
@@ -59,6 +59,7 @@ clean:
 	@echo "$(RED)🧹clean		pushswap$(DEF_COLOR)"
 
 fclean:
+	@rm -f $(NAME)
 	@rm -rf $(BUILD_DIR)
 	@Make -C $(LIBFT_PATH) fclean
 	@echo "$(RED)🧹clean		pushswap$(DEF_COLOR)"
