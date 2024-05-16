@@ -6,7 +6,7 @@
 #    By: capapes <capapes@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/06 14:40:46 by capapes           #+#    #+#              #
-#    Updated: 2024/05/15 20:47:27 by capapes          ###   ########.fr        #
+#    Updated: 2024/05/16 12:46:32 by capapes          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,13 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRC = ft_arr.c ft_aux.c ft_isint.c ft_moves.c ft_moves_2.c ft_stacks.c  ft_sort_fixed.c ft_sort_radix.c push_swap.c
-OBJ = $(SRC:.c=.o)
-DPS = $(SRC:.c=.d)
+BUILD_DIR = ./build
+OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
+DPS := $(OBJ:.o=.d)  # Correct dependency file generation
 LIBFT_PATH	=	./libft
 PREQ = Makefile $(LIBFT_PATH)/libft.a
 NAME = push_swap
+CPPFLAGS := -MMD -MP
 
 #Colors
 
@@ -44,23 +46,25 @@ $(NAME): ${OBJ}
 	@$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_PATH) -lft
 	@echo "$(GREEN)📚completed		push_swap.c$(DEF_COLOR)"
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c  -MMD -o $@ $<
+$(BUILD_DIR)/%.o: %.c ${DPS} | $(BUILD_DIR)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 	@echo "$(GRAY)⏳compiling		$<$(DEF_COLOR)"
 
-%.d: %.c
-	@$(CC) $(CFLAGS) -M -MP -MT '$(<:.c=.o)' -MF $@ $<
+$(BUILD_DIR):
+	@mkdir -p $@
 
 clean:
-	@rm -f $(OBJ) $(DPS)
+	@rm -rf $(BUILD_DIR)
 	@Make -C $(LIBFT_PATH) clean
 	@echo "$(RED)🧹clean		pushswap$(DEF_COLOR)"
 
 fclean:
-	@rm -f $(NAME) $(OBJ) $(DPS)
+	@rm -rf $(BUILD_DIR)
 	@Make -C $(LIBFT_PATH) fclean
 	@echo "$(RED)🧹clean		pushswap$(DEF_COLOR)"
 
 re: fclean all 
+
+-include $(DPS)
 
 .PHONY: all clean fclean re

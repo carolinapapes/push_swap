@@ -6,7 +6,7 @@
 #    By: capapes <capapes@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 18:47:51 by capapes           #+#    #+#              #
-#    Updated: 2024/05/15 20:46:52 by capapes          ###   ########.fr        #
+#    Updated: 2024/05/16 12:17:05 by capapes          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,9 @@ ft_split.c ft_strchr.c ft_strdup.c  ft_striteri.c ft_strjoin.c  ft_strmapi.c ft_
 ft_strtrim.c ft_substr.c ft_toupper.c ft_tolower.c \
 ft_lstadd_back.c ft_lstadd_front.c  ft_lstclear.c ft_lstdelone.c \
 ft_lstiter.c ft_lstlast.c  ft_lstmap.c ft_lstnew.c ft_lstsize.c 
-OBJ = $(SRC:.c=.o)
-DPS = $(SRC:.c=.d)
+BUILD_DIR = ./build
+OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
+DPS := $(SRC:%.c=$(BUILD_DIR)/%.d)
 PREQ = Makefile
 
 
@@ -45,18 +46,22 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(GREEN)📚completed		libft.a$(DEF_COLOR)"
 
-%.o: %.c $(PREQ)
+$(BUILD_DIR)/%.o: %.c $(PREQ) | $(BUILD_DIR)
 	@$(CC) $(CFLAGS) -c -MMD -o $@ $<
 	@echo "$(GRAY)⏳compiling		$<$(DEF_COLOR)"
 
+$(BUILD_DIR):
+	@mkdir -p $@
 
 clean:
-	@rm -f $(OBJ) $(DPS) 
+	@rm -rf $(BUILD_DIR)
 	@echo "$(RED)🧹clean		libft$(DEF_COLOR)"
 
 fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all 
+
+-include $(DPS)
 
 .PHONY: all clean fclean re
